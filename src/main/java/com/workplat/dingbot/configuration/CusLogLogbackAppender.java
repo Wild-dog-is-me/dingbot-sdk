@@ -21,8 +21,8 @@ import java.util.regex.Pattern;
 public class CusLogLogbackAppender extends AppenderBase {
     @Override
     protected void append(Object eventObject) {
-        if(eventObject instanceof LoggingEvent){
-            LoggingEvent loggingEvent = (LoggingEvent)eventObject;
+        if (eventObject instanceof LoggingEvent) {
+            LoggingEvent loggingEvent = (LoggingEvent) eventObject;
             //拿到ThrowableProxy
             ThrowableProxy throwableProxy = (ThrowableProxy) loggingEvent.getThrowableProxy();
             if (Objects.nonNull(throwableProxy)) {
@@ -31,19 +31,17 @@ public class CusLogLogbackAppender extends AppenderBase {
                 //获取log的msg
                 String formattedMessage = loggingEvent.getFormattedMessage();
                 DingBotConfig dingbotConfig = DingBean.getBean(DingBotConfig.class);
-                System.out.println("============="+formattedMessage+"=============");
                 if (dingbotConfig.isBotEnabled()) {
                     DingBotApi dingBotApi = DingBean.getBean(DingBotApi.class);
                     List<String> triggerWords = dingbotConfig.getTriggerWords();
-                    System.out.println("============="+triggerWords.toString()+"=============");
                     if (!CollectionUtils.isEmpty(triggerWords)) {
                         for (String word : triggerWords) {
                             if (formattedMessage != null && isContained(word, formattedMessage)) {
-                                String active = DingBean.getEnvironment().getProperty("spring.profiles.active");
-                                if (!Objects.isNull(active)) {
-                                    System.out.println("=============" + active + "=============");
+                                String active = "";
+                                if (!Objects.isNull(DingBean.getEnvironment().getProperty("spring.profiles.active"))) {
+                                    active = DingBean.getEnvironment().getProperty("spring.profiles.active");
                                 } else {
-                                    System.out.println("=============" + "active is null" + "=============");
+                                    active = "prod";
                                 }
                                 dingBotApi.sendTextMsg(active + "：" + formattedMessage + "\n" + throwable.toString(), null);
                                 break;
@@ -56,7 +54,9 @@ public class CusLogLogbackAppender extends AppenderBase {
         super.doAppend(eventObject);
     }
 
-    /** 正则方法支持 */
+    /**
+     * 正则方法支持
+     */
     private boolean isContained(String regex, String content) {
         if (StringUtils.isEmpty(regex) && StringUtils.isEmpty(content)) {
             return false;

@@ -57,7 +57,7 @@ public class DingBotService implements DingBotApi {
     public String sendTextMsg(String content, List<String> mobileList) {
         Map<String, Object> textMap = new HashMap<>();
         textMap.put("content", content);
-        return send(dingBotConfig.getBotUrl(), dingBotConfig.getBotKey(), dingBotConfig.getBotToken(), ContentType.Text, textMap, true, mobileList);
+        return send(dingBotConfig.getBotUrl(), dingBotConfig.getBotKey(), dingBotConfig.getBotToken(), ContentType.Text, textMap, false, mobileList);
     }
 
     @Override
