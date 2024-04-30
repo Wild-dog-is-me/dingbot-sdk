@@ -4,6 +4,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Author: Odin
  * @Date: 2024/4/29 09:29
@@ -26,17 +29,17 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties(prefix = "ding")
 public class DingBotConfig {
 
-    // 钉钉机器人地址
     private String botUrl = "https://oapi.dingtalk.com/robot/send";
 
-    // 钉钉机器人key
     private String botKey = "SECaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
-    // 钉钉机器人token
     private String botToken = "xxxxxxxxxxxxxxxxxxxxxxxxx";
 
     /** 是否开启机器人默认：false */
     private boolean botEnabled = false;
+
+    /** 触发词 */
+    private List<String> triggerWords = new ArrayList<>();
 
     public String getBotUrl() {
         return botUrl;
@@ -68,5 +71,13 @@ public class DingBotConfig {
 
     public void setBotEnabled(boolean botEnabled) {
         this.botEnabled = botEnabled;
+    }
+
+    public List<String> getTriggerWords() {
+        return triggerWords;
+    }
+
+    public void setTriggerWords(List<String> triggerWords) {
+        this.triggerWords = triggerWords;
     }
 }
