@@ -1,6 +1,7 @@
 package com.workplat.dingbot.api;
 
 import com.workplat.dingbot.common.DingContent;
+import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * @Date: 2024/4/29 09:51
  * @Description:
  */
+
 public interface DingBotApi {
 
 
